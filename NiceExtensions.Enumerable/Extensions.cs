@@ -1,135 +1,115 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace NiceExtensions.Enumerable
+﻿namespace NiceExtensions.Enumerable
 {
-    public static class Extensions
-    {
+	public static partial class Extensions
+	{
+		/// <summary>
+		/// ForEach on IEnumerable.<br/>
+		/// Use ForEachAsync for async expression that should be waited and not void.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="items"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> ForEach<T>(this IEnumerable<T> items, Action<T> action)
+		{
+			foreach (var item in items)
+				action(item);
+			return items;
+		}
 
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> items, Action<T> action)
-        {
-            foreach (var item in items)
-                action(item);
-            return items;
-        }
-        public static async Task ForEachAsync<T>(this IAsyncEnumerable<T> values, Action<T> action)
-        {
-            await foreach (var value in values)
-            {
-                action(value);
-            }
-        }
+		public static async Task ForEachAsync<T>(this IEnumerable<T> values, Func<T, Task> func)
+		{
+			foreach (var value in values)
+			{
+				await Task.Run(new Func<Task>(() => func(value)));
+			}
+		}
 
-        public static IEnumerable<T> Reverse<T>(this IEnumerable<T> items)
-        {
-            var arr = items.ToArray();
-            for (var i = arr.Length-1; i >= 0; i--)
-            {
-                yield return arr[i];
-            }
-        }
+		public static async Task ForEachAsync<T>(this IAsyncEnumerable<T> values, Action<T> action)
+		{
+			await foreach (var value in values)
+			{
+				action(value);
+			}
+		}
 
-        /// <summary>
-        /// Creates an IEnumerable that caches already enumerated values and preserves the lazy load generator advantages lost with a .ToList() 
-        /// </summary>
-        public static IEnumerable<T> ToCachedEnumerable<T>(this IEnumerable<T> items)
-        {
-            IEnumerator<T> enumerator = items.GetEnumerator();
-            List<T> cache = new List<T>();
-            SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
-            return ToCachedEnumerableHelper(enumerator, cache, semaphore);
-        }
+		public static async Task ForEachAsync<T>(this IAsyncEnumerable<T> values, Func<T, Task> func)
+		{
+			await foreach (var value in values)
+			{
+				await Task.Run(new Func<Task>(() => func(value)));
+			}
+		}
 
-        private static IEnumerable<T> ToCachedEnumerableHelper<T>(IEnumerator<T> enumerator, List<T> cache, SemaphoreSlim semaphore)
-        {
-            for (int i = 0; true; i++)
-            {
-                semaphore.Wait();
-                if (i < cache.Count)
-                {
-                    semaphore.Release();
-                    yield return cache[i];
-                    continue;
-                }
-                T t = default!;
-                bool set = false;
-                try
-                {
-                    if (enumerator.MoveNext())
-                    {
-                        t = enumerator.Current;
-                        cache.Add(t);
-                        set = true;
-                    }
-                }
-                catch (Exception)
-                {
-                    break;
-                    throw;
-                }
-                finally
-                {
-                    semaphore.Release();
-                }
-                if (set)
-                    yield return t;
-                else
-                    yield break;
-            }
-        }
+		public static IEnumerable<T> Reverse<T>(this IEnumerable<T> items)
+		{
+			var arr = items.ToArray();
+			for (var i = arr.Length - 1; i >= 0; i--)
+			{
+				yield return arr[i];
+			}
+		}
 
-        /// <summary>
-        /// Creates an IAsyncEnumerable that caches already enumerated values and preserves the lazy load generator advantages lost with a .ToList() 
-        /// </summary>
-        public static IAsyncEnumerable<T> ToCachedAsyncEnumerable<T>(this IAsyncEnumerable<T> items)
-        {
-            IAsyncEnumerator<T> enumerator = items.GetAsyncEnumerator();
-            List<T> cache = new List<T>();
-            SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
-            return ToCachedAsyncEnumerableHelper(enumerator, cache, semaphore);
-        }
+		public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> keyValuePairs) where TKey : notnull
+		{
+			return keyValuePairs.ToDictionary(k => k.Key, v => v.Value);
+		}
+
+		/// <summary>
+		/// Gets the item by the max value of the expression
+		/// </summary>
+		/// <typeparam name="T1"></typeparam>
+		/// <typeparam name="T2"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="func">Selector to compare items</param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static T1 ByMax<T1, T2>(this IEnumerable<T1> list, Func<T1, T2> func)
+			where T1 : notnull
+			where T2 : IComparable
+		{
+			var enumer = list.GetEnumerator();
+			if (!enumer.MoveNext())
+				throw new ArgumentException("List must not be empty");
+
+			T1 max = enumer.Current;
+			while (enumer.MoveNext())
+			{
+				if (func.Invoke(enumer.Current).CompareTo(func(max)) > 0)
+					max = enumer.Current;
+			}
+
+			return max;
+		}
+
+		/// <summary>
+		/// Gets the item by the min value of the expression
+		/// </summary>
+		/// <typeparam name="T1"></typeparam>
+		/// <typeparam name="T2"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="func">Selector to compare items</param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public static T1 ByMin<T1, T2>(this IEnumerable<T1> list, Func<T1, T2> func)
+			where T1 : notnull
+			where T2 : IComparable
+		{
+			var enumer = list.GetEnumerator();
+			if (!enumer.MoveNext())
+				throw new ArgumentException("List must not be empty");
+
+			T1 min = enumer.Current;
+			while (enumer.MoveNext())
+			{
+				if (func(enumer.Current).CompareTo(func(min)) < 0)
+					min = enumer.Current;
+			}
+
+			return min;
+		}
 
 
-        private static async IAsyncEnumerable<T> ToCachedAsyncEnumerableHelper<T>(IAsyncEnumerator<T> enumerator, List<T> cache, SemaphoreSlim semaphore)
-        {
-            for (int i = 0; true; i++)
-            {
-                await semaphore.WaitAsync();
-                if (i < cache.Count)
-                {
-                    semaphore.Release();
-                    yield return cache[i];
-                    continue;
-                }
-                T t = default!;
-                bool set = false;
-                try
-                {
-                    if (await enumerator.MoveNextAsync())
-                    {
-                        t = enumerator.Current;
-                        cache.Add(t);
-                        set = true;
-                    }
-                }
-                catch (Exception)
-                {
-                    break;
-                    throw;
-                }
-                finally
-                {
-                    semaphore.Release();
-                }
-                if (set)
-                    yield return t;
-                else
-                    yield break;
-            }
-        }
-    }
 
-    //public static IEnumerable<int> Sequence(int start,int end,int step = 1)
-    //{
-    //    for (var i = start; i <= end; i+)
-    //}
+	}
 }

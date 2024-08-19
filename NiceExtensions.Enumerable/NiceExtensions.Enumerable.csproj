@@ -4,7 +4,7 @@
 		<TargetFrameworks>net8.0;net6.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>1.1.7</Version>
+		<Version>1.1.11</Version>
 		<Platforms>x64;x86;Any CPU</Platforms>
 		<FileVersion>$(VersionPrefix)</FileVersion>
 		<PlatformTarget>AnyCPU</PlatformTarget>

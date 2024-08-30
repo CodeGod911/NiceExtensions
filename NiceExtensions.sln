@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiceExtensions.Json", "Nice
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiceExtensions.MethodChaining", "NiceExtensions.MethodChaining\NiceExtensions.MethodChaining.csproj", "{BD501EA6-40BE-4FB7-B35A-6149B1B610E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NiceExtensions.Enumerable.Test", "NiceExtensions.Enumerable.Test\NiceExtensions.Enumerable.Test.csproj", "{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NiceExtensions.Enumerable.Tests", "NiceExtensions.Enumerable.Test\NiceExtensions.Enumerable.Tests.csproj", "{0791EED1-D541-4051-9205-BE2351E1EB66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,14 @@ Global
 		{BD501EA6-40BE-4FB7-B35A-6149B1B610E5}.Release|Any CPU.Build.0 = Release|x64
 		{BD501EA6-40BE-4FB7-B35A-6149B1B610E5}.Release|x64.ActiveCfg = Release|x64
 		{BD501EA6-40BE-4FB7-B35A-6149B1B610E5}.Release|x64.Build.0 = Release|x64
-		{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}.Debug|x64.Build.0 = Debug|Any CPU
-		{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}.Release|x64.ActiveCfg = Release|Any CPU
-		{2D1EA7EB-320B-48D7-B481-74B2D07AF5DA}.Release|x64.Build.0 = Release|Any CPU
+		{0791EED1-D541-4051-9205-BE2351E1EB66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0791EED1-D541-4051-9205-BE2351E1EB66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0791EED1-D541-4051-9205-BE2351E1EB66}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0791EED1-D541-4051-9205-BE2351E1EB66}.Debug|x64.Build.0 = Debug|Any CPU
+		{0791EED1-D541-4051-9205-BE2351E1EB66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0791EED1-D541-4051-9205-BE2351E1EB66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0791EED1-D541-4051-9205-BE2351E1EB66}.Release|x64.ActiveCfg = Release|Any CPU
+		{0791EED1-D541-4051-9205-BE2351E1EB66}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -96,7 +96,7 @@ namespace NiceExtensions.Enumerable
 
 
         /// <summary>
-        /// Creates and IEnumerable that enumerates in the background even if no value is requested at the time. <br/>
+        /// Creates and IAsyncEnumerable that enumerates in the background even if no value is requested at the time. <br/>
         /// If streaming a value makes sense to start work without the full working set available but should have the next value ready if the work of and item is complete. <br/>
         /// ExampleUse: IO to IO streaming e.g for parallel reading and writing
         /// </summary>

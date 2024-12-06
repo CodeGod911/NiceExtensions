@@ -2,7 +2,7 @@
 {
     public class CachedEnumerableTests
     {
-        private Dictionary<int, string> _pairs = new() { { 1, "test" }, { 2, "test" }, { 3, "test" } };
+        private readonly Dictionary<int, string> _pairs = new() { { 1, "test" }, { 2, "test" }, { 3, "test" } };
 
         [Fact]
         public void ToCachedEnumerableTest()

@@ -42,7 +42,7 @@
             Assert.Equal(intlist, GetIntsAsync(false));
         }
 
-        public IEnumerable<int> GetInts(bool wait)
+        public static IEnumerable<int> GetInts(bool wait)
         {
             for (int i = 0; i < 100; i++)
             {
@@ -53,7 +53,7 @@
         }
 
 
-        public async IAsyncEnumerable<int> GetIntsAsync(bool wait)
+        public static async IAsyncEnumerable<int> GetIntsAsync(bool wait)
         {
             for (int i = 0; i < 100; i++)
             {

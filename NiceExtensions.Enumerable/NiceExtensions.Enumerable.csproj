@@ -4,8 +4,8 @@
 		<TargetFrameworks>net8.0;net6.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Version>1.1.11</Version>
-		<Platforms>x64;x86;Any CPU</Platforms>
+		<Version>1.2.0</Version>
+		<Platforms>AnyCPU</Platforms>
 		<FileVersion>$(VersionPrefix)</FileVersion>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<PackageReadmeFile>README.md</PackageReadmeFile>

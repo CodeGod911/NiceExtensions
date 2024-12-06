@@ -37,12 +37,12 @@ namespace NiceExtensions.Enumerable
                 finished = true;
             }, ct);
 
-            while (queue.Count != 0 || !finished)
+            while (!queue.IsEmpty || !finished)
             {
                 if (task.Exception != null)
                     throw task.Exception;
 
-                if (queue.Count == 0)
+                if (queue.IsEmpty)
                     Task.Delay(1, ct).Wait(ct);
                 else
                     if (queue.TryDequeue(out var res))
@@ -81,12 +81,12 @@ namespace NiceExtensions.Enumerable
                 finished = true;
             }, ct);
 
-            while (queue.Count != 0 || !finished)
+            while (!queue.IsEmpty || !finished)
             {
                 if (task.Exception != null)
                     throw task.Exception;
 
-                if (queue.Count == 0)
+                if (queue.IsEmpty)
                     await Task.Delay(1, ct);
                 else
                     if (queue.TryDequeue(out var res))
@@ -125,12 +125,12 @@ namespace NiceExtensions.Enumerable
                 finished = true;
             }, ct);
 
-            while (queue.Count != 0 || !finished)
+            while (!queue.IsEmpty || !finished)
             {
                 if (task.Exception != null)
                     throw task.Exception;
 
-                if (queue.Count == 0)
+                if (queue.IsEmpty)
                     await Task.Delay(1, ct);
                 else
                     if (queue.TryDequeue(out var res))
